@@ -1,0 +1,49 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.2.2.RELEASE'
+        classpath 'org.springframework:springloaded:1.2.0.RELEASE'
+    }
+}
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+apply plugin: 'jetty'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+version = '1.0'
+
+//mainClassName = 'hello.Example'
+
+jar {
+    baseName = 'first-spring-boot'
+    version =  '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+def seleniumVersion = '2.45.0'
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    providedRuntime("org.springframework.boot:spring-boot-starter-jetty")
+    testCompile 'junit:junit:4.11',
+            'info.cukes:cucumber-java:1.2.2',
+            'info.cukes:cucumber-junit:1.2.2'
+    testCompile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version:seleniumVersion
+    testCompile group: 'org.seleniumhq.selenium', name: 'selenium-chrome-driver', version:seleniumVersion
+    testCompile group: 'org.seleniumhq.selenium', name: 'selenium-api', version:seleniumVersion
+    testCompile group: 'org.seleniumhq.selenium', name: 'selenium-java', version:seleniumVersion
+}
+
+idea {
+    module {
+        inheritOutputDirs = false
+        outputDir = file("$buildDir/classes/main/")
+    }
+}
